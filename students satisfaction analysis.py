@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import math
-from matplotlib.backends.backend_pdf import PdfPages # Import PdfPages
+from matplotlib.backends.backend_pdf import PdfPages  # Import PdfPages
 
 # --- Custom Dark Theme for Plots ---
 plt.rcParams.update({
@@ -103,7 +103,6 @@ pdf_filename = "Student_Satisfaction_Analysis_Plots.pdf"
 pdf_pages = PdfPages(pdf_filename)
 print(f"All plots will be saved to '{pdf_filename}'")
 
-
 # --- 2. Initial Inspection & Overview ---
 print("--- 2. Initial Inspection & Overview ---")
 
@@ -149,11 +148,11 @@ print((df.isnull().sum() / len(df)) * 100)
 # Visualize missing values (requires matplotlib and seaborn)
 # Plot only if there are missing values
 if df.isnull().sum().sum() > 0:
-    fig_missing, ax_missing = plt.subplots(figsize=(10, 6)) # Create a figure object
+    fig_missing, ax_missing = plt.subplots(figsize=(10, 6))  # Create a figure object
     sns.heatmap(df.isnull(), cbar=False, cmap='viridis', ax=ax_missing)
     ax_missing.set_title('Missing Values Heatmap')
-    pdf_pages.savefig(fig_missing) # Save the figure to PDF
-    plt.close(fig_missing) # Close the figure to free memory
+    pdf_pages.savefig(fig_missing)  # Save the figure to PDF
+    plt.close(fig_missing)  # Close the figure to free memory
 else:
     print("No missing values found in the dataset. Heatmap not generated.")
 
@@ -222,7 +221,7 @@ if num_plots > 0:
     n_cols = 3
     n_rows = math.ceil(num_plots / n_cols)
 
-    fig_box, axes_box = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5, n_rows * 3)) # Create a figure object
+    fig_box, axes_box = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5, n_rows * 3))  # Create a figure object
     axes_box = axes_box.flatten()
 
     for i, col in enumerate(numerical_cols_for_plots):
@@ -250,7 +249,7 @@ if num_plots > 0:
     n_rows_density = math.ceil(num_plots / n_cols_density)
 
     fig_density, axes_density = plt.subplots(n_rows_density, n_cols_density,
-                                             figsize=(n_cols_density * 5, n_rows_density * 3)) # Create a figure object
+                                             figsize=(n_cols_density * 5, n_rows_density * 3))  # Create a figure object
     axes_density = axes_density.flatten()
     fig_density.suptitle('Density Distributions for Numerical Columns (After Cleaning)', y=1.02, fontsize=18)
 
@@ -265,8 +264,8 @@ if num_plots > 0:
         fig_density.delaxes(axes_density[j])
 
     plt.tight_layout()
-    pdf_pages.savefig(fig_density) # Save the figure to PDF
-    plt.close(fig_density) # Close the figure to free memory
+    pdf_pages.savefig(fig_density)  # Save the figure to PDF
+    plt.close(fig_density)  # Close the figure to free memory
 else:
     print("No numerical columns found to generate density plots after filtering 'SN'.")
 
@@ -287,7 +286,7 @@ if not desc_stats_df.empty and numerical_cols_for_desc_plots:
     n_rows_desc_plot = math.ceil(num_stats / n_cols_desc_plot)
 
     fig_desc, axes_desc = plt.subplots(n_rows_desc_plot, n_cols_desc_plot,
-                                       figsize=(n_cols_desc_plot * 5, n_rows_desc_plot * 3)) # Create a figure object
+                                       figsize=(n_cols_desc_plot * 5, n_rows_desc_plot * 3))  # Create a figure object
     axes_desc = axes_desc.flatten()
     fig_desc.suptitle('Descriptive Statistics for Numerical Columns (After Cleaning)', y=1.02, fontsize=18)
 
@@ -359,15 +358,17 @@ if basic_course_col in df.columns:
                 print(sorted_basic_courses)
 
                 # Plotting overall performance by Basic Course
-                fig_overall_basic, ax_overall_basic = plt.subplots(figsize=(12, 10)) # Create a figure object
-                sorted_basic_courses['Overall_Metric_for_Plot'].plot(kind='barh', color='steelblue', ax=ax_overall_basic)
-                ax_overall_basic.set_title(f'Overall Average Metric Performance by Basic Course ({overall_metric_label})')
+                fig_overall_basic, ax_overall_basic = plt.subplots(figsize=(12, 10))  # Create a figure object
+                sorted_basic_courses['Overall_Metric_for_Plot'].plot(kind='barh', color='steelblue',
+                                                                     ax=ax_overall_basic)
+                ax_overall_basic.set_title(
+                    f'Overall Average Metric Performance by Basic Course ({overall_metric_label})')
                 ax_overall_basic.set_xlabel(overall_metric_label)
                 ax_overall_basic.set_ylabel('Basic Course', fontsize=8)
                 ax_overall_basic.invert_yaxis()
                 plt.tight_layout()
-                pdf_pages.savefig(fig_overall_basic) # Save the figure to PDF
-                plt.close(fig_overall_basic) # Close the figure to free memory
+                pdf_pages.savefig(fig_overall_basic)  # Save the figure to PDF
+                plt.close(fig_overall_basic)  # Close the figure to free memory
 
             else:
                 print("No suitable overall metric for plotting.")
@@ -402,7 +403,7 @@ if basic_course_col in df.columns and available_metrics_for_plotting_detailed:
     n_rows_plot = math.ceil(num_metrics / n_cols_plot)
 
     fig_basic, axes_basic = plt.subplots(n_rows_plot, n_cols_plot,
-                                         figsize=(n_cols_plot * 5, n_rows_plot * 3)) # Create a figure object
+                                         figsize=(n_cols_plot * 5, n_rows_plot * 3))  # Create a figure object
     axes_basic = axes_basic.flatten()
     fig_basic.suptitle('Average Metric Performance by Basic Course', y=1.02, fontsize=18)
 
@@ -424,8 +425,8 @@ if basic_course_col in df.columns and available_metrics_for_plotting_detailed:
         fig_basic.delaxes(axes_basic[j])
 
     plt.tight_layout()
-    pdf_pages.savefig(fig_basic) # Save the figure to PDF
-    plt.close(fig_basic) # Close the figure to free memory
+    pdf_pages.savefig(fig_basic)  # Save the figure to PDF
+    plt.close(fig_basic)  # Close the figure to free memory
 else:
     print(
         f"Skipping Basic Course detailed analysis: '{basic_course_col}' column or relevant numeric metrics not found.")
@@ -454,7 +455,7 @@ if course_name_col in df.columns and available_metrics_for_plotting_course_name:
     n_rows_plot = math.ceil(num_metrics / n_cols_plot)
 
     fig_course, axes_course = plt.subplots(n_rows_plot, n_cols_plot,
-                                           figsize=(n_cols_plot * 5, n_rows_plot * 3)) # Create a figure object
+                                           figsize=(n_cols_plot * 5, n_rows_plot * 3))  # Create a figure object
     axes_course = axes_course.flatten()
     fig_course.suptitle('Average Metric Performance by Course Name', y=1.02, fontsize=18)
 
@@ -538,7 +539,59 @@ if 'Questions' in df.columns:
 else:
     print("Column 'Questions' not found in the dataset. Skipping question-level analysis.")
 
+# --- 13. Correlation Analysis ---
+print("--- 13. Correlation Analysis (Weightages vs. Average Score) ---")
+
+weightage_cols = [col for col in df.columns if 'Weightage' in col and pd.api.types.is_numeric_dtype(df[col])]
+target_col = 'Average_Score'
+
+if target_col in df.columns and weightage_cols:
+    cols_for_correlation = [target_col] + weightage_cols
+
+    # Calculate the correlation matrix
+    correlation_matrix = df[cols_for_correlation].corr()
+    print("Correlation Matrix (Weightages and Average_Score):")
+    print(correlation_matrix)
+
+    # Extract correlations specifically with Average_Score
+    if target_col in correlation_matrix.columns:
+        correlations_with_avg_score = correlation_matrix[target_col].drop(target_col)
+        print(f"Correlations with {target_col}:")
+        print(correlations_with_avg_score.sort_values(ascending=False))
+
+        # Plotting the correlation heatmap
+        fig_corr, ax_corr = plt.subplots(figsize=(8, 6))
+        sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5, ax=ax_corr)
+        ax_corr.set_title(f'Correlation Matrix: {target_col} vs. Weightages')
+        plt.tight_layout()
+        pdf_pages.savefig(fig_corr)
+        plt.close(fig_corr)
+
+        # Plotting individual correlations with Average_Score (bar plot for clarity)
+        fig_single_corr, ax_single_corr = plt.subplots(figsize=(10, 6))
+        correlations_with_avg_score.sort_values(ascending=False).plot(kind='barh', color='lightcoral',
+                                                                      ax=ax_single_corr)
+        ax_single_corr.set_title(f'Correlation of Weightage Metrics with {target_col}')
+        ax_single_corr.set_xlabel('Correlation Coefficient')
+        ax_single_corr.set_ylabel('Weightage Metric')
+        ax_single_corr.invert_yaxis()
+        plt.tight_layout()
+        pdf_pages.savefig(fig_single_corr)
+        plt.close(fig_single_corr)
+
+
+    else:
+        print(f"'{target_col}' not found in the correlation matrix, perhaps due to missing data.")
+else:
+    print("Skipping correlation analysis: 'Average_Score' column or 'Weightage' columns not found or not numeric.")
+
 # --- Close the PDF file ---
 pdf_pages.close()
 print(f"All plots have been saved to '{pdf_filename}'")
+
+# --- Save the cleaned dataset to an Excel file ---
+excel_filename = "Student_Satisfaction_Survey_Cleaned.xlsx"
+df.to_excel(excel_filename, index=False)
+print(f"Cleaned dataset saved successfully to '{excel_filename}'")
+
 print("-- Data Inspection and Analysis Complete ---")
